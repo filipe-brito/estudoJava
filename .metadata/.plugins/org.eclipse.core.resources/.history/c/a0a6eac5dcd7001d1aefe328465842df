@@ -1,0 +1,79 @@
+package application;
+
+import java.util.Locale;
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import entities.Employee;
+
+public class Program {
+
+	public static void main(String[] args){
+		Locale.setDefault(Locale.US);
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.print("How many employees will be registered? ");
+		int n = scan.nextInt();
+		
+		//declarar a lista para a classe dos empregados:
+		List<Employee> list = new ArrayList<>();
+		
+		System.out.println();
+		
+		for(int loop = 0; loop < n; loop++) {
+			System.out.println("Employee #" + (loop + 1));
+			
+			System.out.print("Id: ");
+			int id = scan.nextInt();
+			
+			//Verificar se o id digitado já existe na lista. Caso exista, solicitar para que um novo id seja digitado:
+			while(hasId(list, id)) {
+				System.out.print("Id already taken! Try again: ");
+				id = scan.nextInt();
+			}
+			
+			System.out.print("Name: ");
+			scan.nextLine();
+			String name = scan.nextLine();
+			
+			System.out.print("Salary: ");
+			double salary = scan.nextDouble();
+			
+			//adicionar novos itens na  lista:
+			list.add(new Employee(id, name, salary));
+			
+			System.out.println();
+		}
+		
+		System.out.println("Enter the employee id that will have salary increase: ");
+		int idIncrease = scan.nextInt();
+		
+		//Função lâmbida para testar se o usuário digitou um id válido para receber o aumento de salário:
+			
+		
+		//Caso o id digitado for válido, solicitar que o usuário digite a porcentagem de aumento de salário:
+		//Enviar a porcentagem digitada para a classe dos empregado para calcular o aumento e alterar o valor final do salário:
+		if(hasId(list, idIncrease)) {
+			System.out.print("Enter the percentage: ");
+			double percentage = scan.nextDouble();
+			Employee emp = new Employee();
+			emp.increaseSalary(percentage);
+		}else {
+			System.out.println("This id does not exist!");
+		}
+		
+		
+		//forma de imprimir os conteúdos da lista utilizando um "for" alternativo:
+		for(Employee obj : list) {
+			System.out.println(obj);
+		}
+		
+		scan.close();
+	}
+	
+	//Função para testar se o id digitado já existe utilizando a função lâmbida:
+	public static boolean hasId(List<Employee> list, int id) {
+		Employee emp = list.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+		return emp != null;
+	}
+}
