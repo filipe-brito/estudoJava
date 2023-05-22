@@ -37,20 +37,27 @@ public class Program {
 		for(int loop = 1; loop <= n; loop++) {
 			System.out.println("Enter contract #" + loop + " data: ");
 			System.out.print("Date (DD/MM/YYYY): ");
+			
+			
+			/*parse: É um método da classe SimpleDateFormat que converte uma String em um objeto 
+			 * Date, seguindo o formato especificado pelo SimpleDateFormat associado. No código 
+			 * fornecido, sdf.parse(scan.next()) está sendo usado para analisar a entrada fornecida 
+			 * pelo usuário como uma data.
+			 */
 			Date contractDate = sdf.parse(scan.next());
 			System.out.print("Value per hour: ");
 			double valuePerHour = scan.nextDouble();
 			System.out.print("Duration (hours): ");
 			int hours = scan.nextInt();
 			HourContract contract = new HourContract(contractDate, valuePerHour, hours);
-			worker.addContract(contract);
+			worker.addContract(contract);//isso faz com que o "contract" seja associado ao "worker"
 		}
 		
 		System.out.println();
 		System.out.print("Enter month and year to calculate income(MM/YYYY): ");
-		String monthAndYear = scan.next();
-		int month = Integer.parseInt(monthAndYear.substring(0, 2));
-		int year = Integer.parseInt(monthAndYear.substring(3));
+		String monthAndYear = scan.next();//A data é lida como String mesmo e nos trechos seguintes que ocorre a conversão
+		int month = Integer.parseInt(monthAndYear.substring(0, 2));//converte as caracteres nas posições de "0" à "1" em int
+		int year = Integer.parseInt(monthAndYear.substring(3));//converte as caracteres a partir da posição "3" em int
 		System.out.println("Name: " + worker.getName());
 		System.out.println("Department: " + worker.getDepartment().getName());
 		System.out.println("Income for " + monthAndYear + ": " + String.format("%.2f", worker.income(year,  month)));

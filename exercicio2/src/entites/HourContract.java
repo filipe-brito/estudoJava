@@ -33,6 +33,7 @@ public class HourContract {
 		this.hours = hours;
 	}
 	
+	//Método para calcular a renda total de um contrato:
 	public double totalValue() {
 		return valuePerHour * hours;
 	}
